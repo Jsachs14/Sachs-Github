@@ -1,0 +1,54 @@
+function Main.main 4
+call Intro.init 0
+pop temp 0
+push constant 0
+pop local 0
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 0
+not
+not
+if-goto WHILE_END0
+label WHILE_EXP1
+push local 1
+push constant 0
+eq
+not
+if-goto WHILE_END1
+call Keyboard.keyPressed 0
+pop local 1
+goto WHILE_EXP1
+label WHILE_END1
+push local 1
+push constant 128
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+pop local 0
+call Screen.clearScreen 0
+pop temp 0
+label IF_FALSE0
+push constant 0
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
+call Screen.clearScreen 0
+pop temp 0
+call Pong.startPong 0
+pop temp 0
+call Pong.getPong 0
+pop local 3
+push local 3
+call Pong.runPong 1
+pop temp 0
+push local 3
+call Pong.dispose 1
+pop temp 0
+call Screen.clearScreen 0
+pop temp 0
+push constant 0
+return

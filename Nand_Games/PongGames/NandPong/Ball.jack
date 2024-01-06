@@ -1,0 +1,226 @@
+class Ball {
+    field int x,y;
+    field int l_x,l_y;
+    field int leftWall,rightWall,topWall,bottomWall;
+    field int curWall;
+    field int distance, straightDistance, diagonalDistance;
+    field int ballsize;
+    field boolean xBool, yBool;
+    field boolean invertDir;
+
+    constructor Ball new(int Ax, int Ay, int AleftWall, int Arightwall, int Atopwall, int Abottomwall) {
+        let ballsize = 6;
+
+        let x = Ax;
+        let y = Ay;
+        let leftWall = AleftWall;
+        let rightWall = Arightwall - ballsize;
+        let topWall = Atopwall;
+        let bottomWall = Abottomwall - ballsize;
+
+        let curWall = 0;
+
+        do show();
+
+        return this;
+    }
+
+
+    //simple helper methods
+
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method int getLBall() {
+        return x;
+    }
+
+    method int getRBall() {
+        return x + (ballsize-1);
+    }
+
+    method void show() {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(x,y,x+ballsize-1,y+ballsize-1);
+        return;
+    }
+
+    method void hide() {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(x,y,x+ballsize-1,y+ballsize-1);
+        return;
+    }
+
+    method void bounce(int dir) {
+        var int nx, ny, factor, scaled_x, scaled_y;
+        var boolean bounceDir;
+
+        let scaled_x = l_x/10;
+        let scaled_y = l_y/10;
+
+        
+
+
+        //varying the factor of the bounce based upon the direction of the ball
+        if (dir = 0) {
+            let factor = 10;
+        }
+        else {
+            let bounceDir = ((~(l_x < 0)) & (dir = 1) | (l_x < 0) & (dir = -1));
+            if (bounceDir) {
+                let factor = 25;
+            }
+            else {
+                let factor = 5;
+            }
+        }
+
+        //wall contact
+        //calulating the new x,y coords
+
+        if (curWall = 1) {
+            //right wall
+            let nx = 586;
+            let ny = (scaled_y * (-50))/scaled_x;
+            let ny = y + ny*factor;
+        }
+        else {
+            if (curWall = 2) {
+                //left wall
+                let nx = 0;
+                let ny = (scaled_y * (50))/scaled_x;
+                let ny = y + ny*factor;
+            }
+            else {
+                if (curWall = 3) {
+                    //bottom wall
+                    let ny = 250;
+                    let nx = (scaled_x * (-25))/scaled_y;
+                    let nx = x + nx*factor;
+                }
+                else {
+                    //top wall
+                    let ny = 0;
+                    let nx = (scaled_x * (25))/scaled_y;
+                }
+            }
+        }
+
+        do SetDestination(nx,ny);
+
+        return;
+
+
+
+    }
+
+    method void SetDestination(int setx, int sety) {
+        //distance calculations
+        var int dx, dy, temp;
+
+        let l_x = setx - x;
+        let l_y = sety - y;
+
+        let dx = Math.abs(l_x);
+        let dy = Math.abs(l_y);
+        let invertDir = (dx < dy);
+
+        if (invertDir) {
+            let temp = dx;
+            let dx = dy;
+            let dy = temp;
+
+            let xBool = x < setx;
+            let yBool = y < sety;
+        }
+        else {
+            let xBool = x < setx;
+            let yBool = y < sety;
+        }
+
+        let distance = 2*dy - dx;
+        let straightDistance = 2*dy;
+        let diagonalDistance = 2*(dy - dx);
+
+        return;
+    }
+
+    method int move() {
+
+        do hide();
+
+        if (distance < 0) {
+            let distance = distance + straightDistance;
+        }
+        else {
+            let distance = distance + diagonalDistance;
+
+            if (xBool) {
+                if (invertDir) {
+                    let y = y+4;
+                }
+                else {
+                    let x = x+4;
+                }
+            }
+            else {
+                if (invertDir) {
+                    let y = y-4;
+                }
+                else {
+                    let x = x-4;
+                }
+            }
+
+            if (yBool) {
+                if (invertDir) {
+                    let x = x+4;
+                }
+                else {
+                    let y = y+4;
+                }
+            }
+            else {
+                if (invertDir) {
+                    let x = x-4;
+                }
+                else {
+                    let y = y-4;
+                }
+            }
+        }
+
+
+        //possible wall contaact detection
+        if (x = leftWall | x < leftWall) {
+            let curWall = 1;
+            let x = leftWall;
+        }
+
+        if (x = rightWall | x > rightWall) {
+            let curWall = 2;
+            let x = rightWall;
+        }
+
+        if (y = topWall | y < topWall) {
+            let curWall = 3;
+            let y = topWall;
+        }
+
+        if (y = bottomWall | y > bottomWall) {
+            let curWall = 4;
+            let y = bottomWall;
+        }
+
+        do show();
+        return curWall;
+
+
+    }
+
+
+
+}

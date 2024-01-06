@@ -1,0 +1,50 @@
+function Main.main 3
+call IntroScreen.init 0
+pop temp 0
+label WHILE_EXP0
+push local 1
+not
+not
+if-goto WHILE_END0
+label WHILE_EXP1
+push local 2
+push constant 0
+eq
+not
+if-goto WHILE_END1
+call Keyboard.keyPressed 0
+pop local 2
+goto WHILE_EXP1
+label WHILE_END1
+push local 2
+push constant 128
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+pop local 1
+call Screen.clearScreen 0
+pop temp 0
+label IF_FALSE0
+push constant 0
+pop local 2
+goto WHILE_EXP0
+label WHILE_END0
+call Screen.clearScreen 0
+pop temp 0
+call Random.init 0
+pop temp 0
+call PongGame.newInstance 0
+pop temp 0
+call PongGame.getInstance 0
+pop local 0
+push local 0
+call PongGame.run 1
+pop temp 0
+push local 0
+call PongGame.dispose 1
+pop temp 0
+push constant 0
+return

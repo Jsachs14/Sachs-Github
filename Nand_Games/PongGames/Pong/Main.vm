@@ -1,0 +1,74 @@
+function Main.main 16
+push constant 0
+pop local 0
+push constant 0
+pop local 1
+push constant 0
+pop local 3
+push constant 0
+pop local 4
+push constant 0
+pop local 5
+push constant 4
+pop local 6
+push constant 2
+pop local 7
+push constant 0
+pop local 8
+push constant 0
+pop local 9
+push constant 0
+pop local 10
+push constant 2
+pop local 11
+push constant 4
+pop local 12
+push constant 0
+pop local 13
+push constant 0
+pop local 14
+call IntroScreen.init 0
+pop temp 0
+label WHILE_EXP0
+push local 0
+not
+not
+if-goto WHILE_END0
+label WHILE_EXP1
+push local 1
+push constant 0
+eq
+not
+if-goto WHILE_END1
+call Keyboard.keyPressed 0
+pop local 1
+goto WHILE_EXP1
+label WHILE_END1
+push local 1
+push constant 128
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+pop local 0
+call Screen.clearScreen 0
+pop temp 0
+label IF_FALSE0
+push constant 0
+pop local 1
+goto WHILE_EXP0
+label WHILE_END0
+call Game.init 0
+pop temp 0
+call Game.getInst 0
+pop local 15
+push local 15
+call Game.runGame 1
+pop temp 0
+push local 15
+call Game.dispose 1
+pop temp 0
+push constant 0
+return

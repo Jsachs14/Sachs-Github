@@ -1,0 +1,66 @@
+class Main {
+    function void main() {
+        var boolean keyexit;
+        var char inputkey;
+        var Paddle paddle1;
+        var boolean turn_played;
+        var char inputkey2,seed;
+        var int cursor_x, cursor_y;
+        var int x_track, y_track;
+        var int rand;
+        var int cursor_y2;
+        var int cursor_x2;
+        var int x_track2, y_track2;
+        var Game game;
+
+
+        let keyexit = false;
+        let inputkey = 0;
+        let turn_played = false;
+        let inputkey2 = 0;
+        let seed = 0;
+        let cursor_x = 4;
+        let cursor_y = 2;
+        let x_track = 0;
+        let y_track = 0;
+        let rand = 0;
+        let cursor_y2 = 2;
+        let cursor_x2 = 4;
+        let x_track2 = 0;
+        let y_track2 = 0;
+        
+
+
+
+        do IntroScreen.init();
+
+        while (~keyexit) {
+            while (inputkey = 0) {
+                let inputkey = Keyboard.keyPressed();
+            }     
+
+            if (inputkey = 128) {
+                let keyexit = true;
+                do Screen.clearScreen();
+            }
+
+            let inputkey = 0;
+        }
+
+        do Game.init();
+        let game = Game.getInst();
+        do game.runGame();
+        do game.dispose();
+
+
+
+
+
+
+
+        
+
+
+        return;
+    }
+}

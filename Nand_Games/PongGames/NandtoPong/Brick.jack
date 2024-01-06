@@ -1,0 +1,81 @@
+class Brick {
+    field int width, height;
+    field int Scrwidth;
+    field Array brick_status;
+    field int i;
+
+    constructor Brick new(int Awidth, int Aheight) {
+        let width = Awidth;
+        let height = Aheight;
+        let brick_status = Array.new(4);
+
+        while (i < 4) {
+            let brick_status[i] = 0;
+            let i = i + 1;
+        }
+
+        let Scrwidth = 512;
+
+        
+
+        return this;
+    }
+
+    method void draw(int Ax, int Ay) {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(Ax, Ay, Ax+width, Ay+height);
+        return;
+    }
+
+    method void undraw(int Ax, int Ay) {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(Ax, Ay, Ax+width, Ay+height);
+        return;
+    }
+
+    method void setOne(int index) {
+        let brick_status[index] = 1;
+        return;
+    }
+
+    method void setZero(int index) {
+        let brick_status[index] = 0;
+        return;
+    }
+
+    method int get(int index) {
+        return brick_status[index];
+    }
+
+    method void hide(int index) {
+        do Screen.setColor(false);
+
+        if (index = 0) {
+            do Screen.drawRectangle(0, 0, 60, 10);
+        }
+        else {
+            if (index = 1) {
+                do Screen.drawRectangle(120, 0, 120+60, 10);
+            }
+            else {
+                if (index = 2) {
+                    do Screen.drawRectangle(331, 0, 331+60, 10);
+                }
+                else {
+                    if (index = 3) {
+                        do Screen.drawRectangle(451, 0, 451+60, 10);
+                    }
+                }
+            }
+        }
+
+        return;
+
+    }
+
+
+
+    //possible brick positions
+
+
+}

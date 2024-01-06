@@ -1,0 +1,46 @@
+class IntroScreen {
+
+    
+
+    function void init() {
+        do Output.moveCursor(10,20);
+        do Output.printString("Welcome to PONG");
+        do Output.println();
+        do Output.println();
+        do Output.printString("This is a one player game");
+        do Output.println();
+        do Output.printString("Player 1 uses the Arrow keys to move");
+        do Output.println();
+        do Output.printString("The paddle will shrink as the bounce score increases");
+        do Output.println();
+        do Output.printString("There are four bricks spots. Hit them to increase brick score!");
+        do Output.println();
+        do Output.printString("Press enter key to start");
+        return;
+    }
+
+    function void displayRandomTitle() {
+        var String randomTitle, random1, random2, random3, random4;
+        let randomTitle = "Random Number Generator Starter Screen";
+        let random1 = "Generating random noise for the brick placement";
+        let random2 = "Smash some keys on your keyboard randomly";
+        let random3 = "Once the counter is loaded, press [enter]";
+        let random4 = "Randomness: ";
+
+        do Output.moveCursor(10,0);
+        do Output.printString(randomTitle);
+        do Output.println();
+        do Output.println();
+        do Output.printString(random1);
+        do Output.println();
+        do Output.printString(random2);
+        do Output.println();
+        do Output.printString(random3);
+        do Output.println();
+        do Output.println();
+        do Output.printString(random4);
+        return;
+    }
+
+
+}

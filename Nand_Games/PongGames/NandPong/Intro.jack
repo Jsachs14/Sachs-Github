@@ -1,0 +1,19 @@
+class Intro {
+
+    function void init() {
+        do Output.moveCursor(10,20);
+        do Output.printString("Welcome to PONG");
+        do Output.println();
+        do Output.println();
+        do Output.printString("This is a one player game");
+        do Output.println();
+        do Output.printString("Player 1 uses the Arrow keys to move");
+        do Output.println();
+        do Output.printString("The paddle will shrink as the score increases");
+        do Output.println();
+        do Output.printString("Future implementation: Bricks!");
+        do Output.println();
+        do Output.printString("Press enter key to start");
+        return;
+    }
+}

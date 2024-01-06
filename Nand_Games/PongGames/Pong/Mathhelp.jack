@@ -1,0 +1,9 @@
+class Mathhelp {
+    function int mod(int a, int b) {
+        return a - (b * (a / b));
+    }
+
+    function int charToInt(int _char) {
+        return _char;
+    }
+}

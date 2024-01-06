@@ -1,0 +1,63 @@
+
+//Linear congruential generator
+//Xn+1 = (aXn + c) mod m
+//number selection must be chosen to assume psuedorandom distribution
+
+
+
+class Random {
+    static int final_seed;
+
+    function void init() {
+        do Random.generateSeed();
+        return;
+    }
+
+    function void generateSeed() {
+        var char keyIn;
+        var boolean isSeedGenerated;
+        var int counter, seed;
+
+        let isSeedGenerated = false;
+
+        do IntroScreen.displayRandomTitle();
+
+        while (~isSeedGenerated) {
+            while (keyIn = 0) {
+                let keyIn = Keyboard.keyPressed();
+            }
+
+            do Output.moveCursor(16,12);
+            do Output.printInt(counter);
+            do Output.printChar(37);
+            let counter = Math.min(counter+5, 100);
+
+            let seed = seed + Mathhelp.charToInt(keyIn);
+
+            if (keyIn = 128) {
+                let isSeedGenerated = true;
+            }
+
+            while (~(keyIn = 0)) {
+                let keyIn = Keyboard.keyPressed();
+            }
+        }
+
+        let final_seed = seed;
+        do Screen.clearScreen();
+        do Output.moveCursor(0,0);
+        return;
+
+    }
+
+    function int next() {
+        let final_seed = Mathhelp.mod((final_seed*17)+7907, 32767);
+        return final_seed;
+    }
+
+    //random number function 
+
+    function int randInt(int l, int u) {
+        return Mathhelp.mod(Math.abs(Random.next()), (u-l+1)) + l;
+    }
+}

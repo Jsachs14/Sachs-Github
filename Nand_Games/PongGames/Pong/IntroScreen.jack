@@ -1,0 +1,19 @@
+class IntroScreen {
+
+    function void init() {
+        do Output.moveCursor(10,20);
+        do Output.printString("Welcome to PONG");
+        do Output.println();
+        do Output.println();
+        do Output.printString("This is a one player game");
+        do Output.println();
+        do Output.printString("Player 1 uses the Arrow keys to move");
+        do Output.println();
+        do Output.printString("Player 2 is a bot playing randomly");
+        do Output.println();
+        do Output.printString("Press some random keys to generate random seed");
+        do Output.println();
+        do Output.printString("Then press enter key to start");
+        return;
+    }
+}

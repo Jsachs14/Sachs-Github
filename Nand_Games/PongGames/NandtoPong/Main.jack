@@ -1,0 +1,41 @@
+
+class Main {
+    function void main() {
+        var PongGame game;
+        var boolean keyexit;
+        var int inputkey;
+        
+
+        do IntroScreen.init();
+
+        while (~keyexit) {
+            while (inputkey = 0) {
+                let inputkey = Keyboard.keyPressed();
+            }     
+
+            if (inputkey = 128) {
+                let keyexit = true;
+                do Screen.clearScreen();
+            }
+
+            let inputkey = 0;
+        }   
+
+        do Screen.clearScreen();
+
+        // do IntroScreen.displayRandomTitle();
+
+        do Random.init();
+
+
+
+
+
+	    do PongGame.newInstance();
+        let game = PongGame.getInstance();
+        do game.run();
+	    do game.dispose();
+
+        return;
+    }
+}

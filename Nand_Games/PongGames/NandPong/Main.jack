@@ -1,0 +1,49 @@
+class Main {
+    function void main() {
+
+
+        var boolean keyexit;
+        var int inputkey;
+        var Ball ball;
+        var Pong pong;
+
+        do Intro.init();
+
+        let keyexit = false;
+        let inputkey = 0;
+
+        while (~keyexit) {
+            while (inputkey = 0) {
+                let inputkey = Keyboard.keyPressed();
+            }     
+
+            if (inputkey = 128) {
+                let keyexit = true;
+                do Screen.clearScreen();
+            }
+
+            let inputkey = 0;
+        } 
+
+        do Screen.clearScreen();
+
+        // let ball = Ball.new(250,120,2,500,2,250);
+
+        
+
+        do Pong.startPong();
+        let pong = Pong.getPong();
+
+        do pong.runPong();
+        do pong.dispose();
+        do Screen.clearScreen();
+
+
+
+
+        return;
+    }
+
+
+
+}

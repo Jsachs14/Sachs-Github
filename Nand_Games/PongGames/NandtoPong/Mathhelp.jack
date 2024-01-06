@@ -1,0 +1,22 @@
+class Mathhelp {
+    function int mod(int a, int b) {
+        return a - (b * (a / b));
+    }
+
+    function int charToInt(int _char) {
+        return _char;
+    }
+
+    function int cellToLocation(int cellX, int cellY) {
+        return 4 + cellX + (512*(cellY+2));
+    }
+
+    function int mineCount(int cellval) {
+        if ((cellval = 1) | (cellval = 2)) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+}
