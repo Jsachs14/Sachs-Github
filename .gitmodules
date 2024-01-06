@@ -1,0 +1,33 @@
+[submodule "Nand2Tetris/1"]
+	path = Nand2Tetris/1
+	url = /1
+[submodule "Nand2Tetris/2"]
+	path = Nand2Tetris/2
+	url = /2
+[submodule "Nand2Tetris/3"]
+	path = Nand2Tetris/3
+	url = /3
+[submodule "Nand2Tetris/4"]
+	path = Nand2Tetris/4
+	url = /4
+[submodule "Nand2Tetris/5"]
+	path = Nand2Tetris/5
+	url = /5
+[submodule "Nand2Tetris/6"]
+	path = Nand2Tetris/6
+	url = /6
+[submodule "Nand2Tetris/7"]
+	path = Nand2Tetris/7
+	url = /7
+[submodule "Nand2Tetris/8"]
+	path = Nand2Tetris/8
+	url = /8
+[submodule "Nand2Tetris/9"]
+	path = Nand2Tetris/9
+	url = /9
+[submodule "Nand2Tetris/10"]
+	path = Nand2Tetris/10
+	url = /10
+[submodule "Nand2Tetris/11"]
+	path = Nand2Tetris/11
+	url = /11
