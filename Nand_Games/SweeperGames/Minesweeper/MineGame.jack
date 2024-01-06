@@ -1,0 +1,10 @@
+
+class MineGame{
+    field Grid grid;
+    field Pointer pointer;
+    field boolean isOver;
+
+    constructor MineGame new() {
+        return this;
+    }
+}

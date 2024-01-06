@@ -1,0 +1,241 @@
+function Pointer.new 0
+push constant 4
+call Memory.alloc 1
+pop pointer 0
+push pointer 0
+return
+function Pointer.init 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 2
+push constant 0
+pop this 0
+push constant 0
+pop this 1
+push constant 0
+pop this 3
+push constant 0
+return
+function Pointer.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Pointer.captureInput 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 1
+label WHILE_EXP0
+push local 1
+push constant 0
+eq
+not
+if-goto WHILE_END0
+push this 3
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 2
+push constant 0
+call Grid.draw 2
+pop temp 0
+push this 0
+push this 1
+call Mathhelp.cellToLocation 2
+call Sprites.drawCursor 1
+pop temp 0
+label IF_FALSE0
+label WHILE_EXP1
+push local 0
+push constant 0
+eq
+not
+if-goto WHILE_END1
+call Keyboard.keyPressed 0
+pop local 0
+goto WHILE_EXP1
+label WHILE_END1
+push local 0
+push constant 130
+eq
+push this 3
+not
+and
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push pointer 0
+call Pointer.moveL 1
+pop temp 0
+label IF_FALSE1
+push local 0
+push constant 131
+eq
+push this 3
+not
+and
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push pointer 0
+call Pointer.moveU 1
+pop temp 0
+label IF_FALSE2
+push local 0
+push constant 132
+eq
+push this 3
+not
+and
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push pointer 0
+call Pointer.moveR 1
+pop temp 0
+label IF_FALSE3
+push local 0
+push constant 133
+eq
+push this 3
+not
+and
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push pointer 0
+call Pointer.moveD 1
+pop temp 0
+label IF_FALSE4
+push local 0
+push constant 70
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push constant 1
+pop local 1
+label IF_FALSE5
+push local 0
+push constant 32
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push constant 2
+pop local 1
+label IF_FALSE6
+push local 0
+push constant 82
+eq
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
+push constant 3
+pop local 1
+label IF_FALSE7
+push local 0
+push constant 81
+eq
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push constant 4
+pop local 1
+label IF_FALSE8
+label WHILE_EXP2
+push local 0
+push constant 0
+eq
+not
+not
+if-goto WHILE_END2
+call Keyboard.keyPressed 0
+pop local 0
+goto WHILE_EXP2
+label WHILE_END2
+goto WHILE_EXP0
+label WHILE_END0
+push local 1
+return
+function Pointer.moveL 0
+push argument 0
+pop pointer 0
+push constant 0
+push this 0
+push constant 1
+sub
+call Math.max 2
+pop this 0
+push constant 0
+return
+function Pointer.moveU 0
+push argument 0
+pop pointer 0
+push constant 0
+push this 1
+push constant 1
+sub
+call Math.max 2
+pop this 1
+push constant 0
+return
+function Pointer.moveR 0
+push argument 0
+pop pointer 0
+push this 2
+call Grid.getColW 1
+push constant 1
+sub
+push this 0
+push constant 1
+add
+call Math.min 2
+pop this 0
+push constant 0
+return
+function Pointer.moveD 0
+push argument 0
+pop pointer 0
+push this 2
+call Grid.getRowH 1
+push constant 1
+sub
+push this 1
+push constant 1
+add
+call Math.min 2
+pop this 1
+push constant 0
+return
+function Pointer.lock 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+pop this 3
+push constant 0
+return
+function Pointer.unlock 0
+push argument 0
+pop pointer 0
+push constant 0
+pop this 3
+push constant 0
+return
+function Pointer.getX 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Pointer.getY 0
+push argument 0
+pop pointer 0
+push this 1
+return

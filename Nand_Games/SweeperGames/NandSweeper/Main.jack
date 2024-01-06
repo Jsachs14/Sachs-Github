@@ -1,0 +1,370 @@
+class Main {
+    function void main() {
+        var boolean keyexit;
+        var char inputkey,inputkey2;
+        var char space_key;
+        var Grid grid;
+        var int i;
+        var int lower_rand, upper_rand, rand_out;
+        var Array board;
+        var Array proximity;
+        var boolean turn_played;
+        var int cursor_x, cursor_y;
+        var int x_track, y_track;
+        var int x_off, y_off;
+        var int tracker;
+        var int index;
+        var int x_temp, y_temp, x_temp2, y_temp2;
+        var Space space;
+
+        let keyexit = false;
+        let inputkey = 0;
+        let inputkey2 = 0;
+        let space_key = 32;
+        let i = 0;
+        let turn_played = false;
+        let x_track = 0;
+        let y_track = 0;
+        let x_off = 0;
+        let y_off = 0;
+        let tracker = 0;
+        let index = 0;
+        
+        
+        
+        //intro screen
+        do Output.printString("Welcome to NANDSWEEPER!");
+        do Output.println();
+        do Output.printString("Use the w,a,s,d keys to move the cursor.");
+        do Output.println();
+        do Output.printString("Press 'r' to reveal a tile.");
+        do Output.println();
+        do Output.printString("Press 'f' to flag a tile.");
+        do Output.println();
+        do Output.printString("Press 'q' to quit.");
+        do Output.println();
+        do Output.printString("Press 'space' to start.");
+        do Output.println();
+
+        
+        while(~keyexit) {
+            while (inputkey = 0) {
+                let inputkey = Keyboard.keyPressed();
+                
+            }
+
+            if (inputkey = space_key) {
+                let keyexit = true;
+            }
+        }
+
+        do Screen.clearScreen();
+
+
+        //randomness keyboard input
+
+        do Random.init();
+
+        // let rand_out = Random.randInt(lower_rand, upper_rand);
+
+
+        //create grid
+        do Screen.drawLine(4,2,4,254);
+        do Screen.drawLine(4,2,508,2);
+        do Screen.drawLine(4,254,508,254);
+        do Screen.drawLine(508,2,508,254);
+
+        //increments of 18 pixels
+        while (i<504) {
+            do Screen.drawLine(4+i,2,4+i,254);
+            let i = i + 18;
+        }
+
+        let i = 0;
+
+        while (i<252) {
+            do Screen.drawLine(4,2+i,508,2+i);
+            let i = i + 18;
+        }
+
+        //normal minesweeper board is 480 boxes with 99 mines, or .20625 mines per box
+        //our board is 392 boxes, so we should have about 80 mines
+        //first in our array board, then on grid
+
+        let board = Array.new(392);
+        let i = 0;
+        let lower_rand = 0;
+        let upper_rand = 392;
+
+        //sets all spaces to 0 initally (no mine)
+        while (i<392) {
+            let board[i] = 0;
+            let i = i + 1;
+        }
+
+        let i = 0;
+
+        //sets 80 random spaces to 1 (mine)
+
+        while (i<80) {
+            let rand_out = Random.randomInt(lower_rand, upper_rand);
+            if (board[rand_out] = 0) {
+                let board[rand_out] = 1;
+                let i = i + 1;
+            }
+        }
+
+        //proximity array for numbers and zero if bomb
+        let proximity = Array.new(392);
+        let i = 0;
+
+        while (i<392) {
+            let proximity[i] = 0;
+            let i = i + 1;
+        }
+
+        let i = 0;
+
+        while (i<392) {
+            if (board[i] = 1) {
+                let proximity[i] = 0;
+            }
+            else {
+                if (i > 28) {
+                    if (board[i-29] = 1) {
+                        let proximity[i] = proximity[i] + 1;
+                    }
+                }
+
+                if (i > 27) {
+                    if (board[i-28] = 1) {
+                        let proximity[i] = proximity[i] + 1;
+                    }
+                }
+
+                if (i > 26) {
+                    if (board[i-27] = 1) {
+                        let proximity[i] = proximity[i] + 1;
+                    }
+                }
+
+                if (i > 0) {
+                    if (board[i-1] = 1) {
+                        let proximity[i] = proximity[i] + 1;
+                    }
+                }
+
+                if (i < 391) {
+                    if (board[i+1] = 1) {
+                        let proximity[i] = proximity[i] + 1;
+                    }
+                }
+
+                if (i < 365) {
+                    if (board[i+27] = 1) {
+                        let proximity[i] = proximity[i] + 1;
+                    }
+                }
+
+                if (i < 364) {
+                    if (board[i+28] = 1) {
+                        let proximity[i] = proximity[i] + 1;
+                    }
+                }
+
+                if (i < 363) {
+                    if (board[i+29] = 1) {
+                        let proximity[i] = proximity[i] + 1;
+                    }
+                }
+            }
+            let i = i + 1;
+        }
+
+        //now defining a cursor in the bottom left corner of the grid
+
+        let cursor_x = 4;
+        let cursor_y = 2;
+
+        // do Screen.drawRectangle(cursor_x, cursor_y, cursor_x+18,cursor_y+18);
+
+
+        //tile to the right of this one
+
+        // do Screen.drawRectangle(cursor_x+18, cursor_y, cursor_x+36,cursor_y+18);
+
+
+        //tile below this one
+
+        // do Screen.drawRectangle(cursor_x, cursor_y+18, cursor_x+18,cursor_y+36);
+
+        
+        //cursor loop
+        
+        
+        while(~turn_played) {
+            
+            
+            while(inputkey2 = 0) {
+                let inputkey2 = Keyboard.keyPressed();
+            }
+
+            //down
+            if (inputkey2 = 133) {
+                if (cursor_y < 236) {
+                    let cursor_y = cursor_y + 18;
+                    let y_track = y_track - 1;
+                    do Screen.clearScreen();
+                    do Screen.drawRectangle(cursor_x, cursor_y, cursor_x+18,cursor_y+18);
+                }  
+            }
+
+            //up
+            if (inputkey2 = 131) {
+                if (cursor_y > 2) {
+                    let cursor_y = cursor_y - 18;
+                    let y_track = y_track + 1;
+                    do Screen.clearScreen();
+                    do Screen.drawRectangle(cursor_x, cursor_y, cursor_x+18,cursor_y+18);
+                }
+            }
+            
+            //left
+            if (inputkey2 = 130) {
+                if (cursor_x > 4) {
+                    let cursor_x = cursor_x - 18;
+                    let x_track = x_track - 1;
+                    do Screen.clearScreen();
+                    do Screen.drawRectangle(cursor_x, cursor_y, cursor_x+18,cursor_y+18);
+                }
+            }
+
+            //right
+            if (inputkey2 = 132) {
+                if (cursor_x < 490) {
+                    let cursor_x = cursor_x + 18;
+                    let x_track = x_track + 1;
+                    do Screen.clearScreen();
+                    do Screen.drawRectangle(cursor_x, cursor_y, cursor_x+18,cursor_y+18);
+                    
+                }
+            }
+
+            //grid add back
+            let i = 0;
+
+            do Screen.drawLine(4,2,4,254);
+            do Screen.drawLine(4,2,508,2);
+            do Screen.drawLine(4,254,508,254);
+            do Screen.drawLine(508,2,508,254);
+            
+
+            //increments of 18 pixels
+            while (i<504) {
+                do Screen.drawLine(4+i,2,4+i,254);
+                let i = i + 18;
+            }
+
+            let i = 0;
+
+            while (i<252) {
+                do Screen.drawLine(4,2+i,508,2+i);
+                let i = i + 18;
+            }
+
+            let inputkey2 = 0;
+
+            do Sys.wait(200);
+
+
+            let y_track = -1 * y_track;
+            let index = 28 * y_track + x_track;
+
+
+
+            // do Screen.drawLine(x_temp+8,y_temp+16,x_temp+16,y_temp+16);
+            // do Screen.drawLine(x_temp+12,y_temp+16,x_temp+12,y_temp+6);
+            // do Screen.drawLine(x_temp+12,y_temp+6,x_temp+18,y_temp+8);
+            // do Screen.drawLine(x_temp+18,y_temp+8,x_temp+12,y_temp+10);
+
+
+            //other moves are r for reveal, f for flag, q for quit
+
+            //initialized as 0 is no mine, 1 is mine
+
+            if (inputkey2 = 32) {
+                let board[index] = 2; //2 is flag
+
+                //drawing flag
+                let x_temp = x_track * 18;
+                let y_temp = y_track * 18;
+
+                do Screen.drawLine(x_temp+8,y_temp+16,x_temp+16,y_temp+16);
+                do Screen.drawLine(x_temp+12,y_temp+16,x_temp+12,y_temp+6);
+                do Screen.drawLine(x_temp+12,y_temp+6,x_temp+18,y_temp+8);
+                do Screen.drawLine(x_temp+18,y_temp+8,x_temp+12,y_temp+10);
+
+
+            }
+
+            if (inputkey2 = 82) {
+                let board[index] = 3; //3 is revealed
+            }
+
+            if (inputkey2 = 81) {
+                let turn_played = true;
+            }
+
+
+            //drawing all flags and revealed spaces
+            //gonna need to implement a class for this
+
+            //flags
+
+            let i = 0;
+
+            while (i<392) {
+                if (board[i]=2) {
+                    let x_temp2 = Mathhelper.mod(i,28);
+                    let y_temp2 = i/28;
+
+                    let x_temp2 = x_temp2 * 18;
+                    let y_temp2 = y_temp2 * 18;
+
+                    do Screen.drawLine(x_temp2+8,y_temp2+16,x_temp2+16,y_temp2+16);
+                    do Screen.drawLine(x_temp2+12,y_temp2+16,x_temp2+12,y_temp2+6);
+                    do Screen.drawLine(x_temp2+12,y_temp2+6,x_temp2+18,y_temp2+8);
+                    do Screen.drawLine(x_temp2+18,y_temp2+8,x_temp2+12,y_temp2+10);
+                }
+
+                let i = i + 1;
+            }
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+        do Sys.wait(10000);
+
+
+
+
+        return;
+    }
+}

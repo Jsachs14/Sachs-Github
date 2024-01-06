@@ -1,0 +1,77 @@
+class Game {
+    field Grid grid;
+    field Pointer pointer;
+    field boolean gameOver;
+
+    constructor Game new() {
+        return this;
+    }
+
+    method void run() {
+        var int action, width,height, percentmines;
+
+        let gameOver = false;
+        let width = 24;
+        let height = 12;
+        let percentmines = 12;
+
+        let grid = Grid.new(width,height, percentmines);
+        let pointer = Pointer.new();
+        do pointer.init(grid);
+
+        do IntroScreen.displayTitle();
+        do IntroScreen.displayInstructions();
+        do Sprites.drawBorder();
+        do IntroScreen.displayMineCount(grid.getMineCount());
+
+        while (~(action=4)) {
+            do grid.draw(gameOver | grid.gameWon());
+            let action = pointer.captureInput();
+
+            if (action = 3) {
+                let gameOver = false;
+                do Screen.clearScreen();
+                do IntroScreen.displayTitle();
+                do IntroScreen.displayInstructions();
+                do Sprites.drawBorder();
+
+                do grid.dispose();
+                let grid = Grid.new(width,height,percentmines);
+                do pointer.init(grid);
+            }
+
+            if (action = 2) {
+                let gameOver = grid.dig(pointer.getX(), pointer.getY());
+            }
+
+            if (action = 1) {
+                do grid.flag(pointer.getX(), pointer.getY());
+            }
+
+            
+
+            do IntroScreen.displayMineCount(Math.max(0, grid.getMineCount()-grid.getFlagCount()));
+
+            if (gameOver) {
+                do pointer.lock();
+                do IntroScreen.displayGameLost();
+            }
+
+            if (grid.gameWon()) {
+                do pointer.lock();
+                do IntroScreen.displayGameWon();
+            }
+
+           
+        }
+
+        return;
+    }
+
+    method void dispose() {
+        do grid.dispose();
+        do pointer.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+}

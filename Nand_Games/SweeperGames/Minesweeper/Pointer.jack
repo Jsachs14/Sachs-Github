@@ -1,0 +1,36 @@
+
+
+class Pointer{
+    field int xloc, yloc;
+    field Grid grid;
+    field boolean pointer_freeze;
+
+    constructor Pointer new(){
+        return this;
+    }
+
+
+    method void init(Grid g){
+        let grid = g;
+        let xloc = 0;
+        let yloc = 0;
+        let pointer_freeze = false;
+        return;
+    }
+
+
+    method int capture(){
+        var char key;
+        var int move;
+        let move = 0;
+
+        while (move=0) {
+            if (~pointer_freeze){
+
+
+                //HALFWAY FINISHED
+            }
+            
+         }
+    }
+}

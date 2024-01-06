@@ -1,0 +1,66 @@
+class Random {
+    static int lastInt;
+    
+    function void init() {
+        do Random.randomInstr();
+        do Random.generateSeed();
+        return;
+    }
+
+
+    function void randomInstr() {
+        do Output.printString("We need to use keyboard input to seed a random number generator");
+        do Output.println();
+        do Output.printString("Please press random keys until the counter reaches 100%");
+        do Output.println();
+        do Output.printString("Press enter once finished");
+        do Output.println();
+        do Output.printString("Randomness: ");
+
+        return;
+    }
+
+    function void generateSeed() {
+        var char key;
+        var boolean finished;
+        var int randomcounter, seed;
+        let finished = false;
+
+
+
+        while (~finished) {
+            while (key = 0) {
+                let key = Keyboard.keyPressed();
+            }
+
+            do Output.moveCursor(9,12); //may have to change
+            do Output.printInt(randomcounter);
+            do Output.printChar(37);
+            let randomcounter = Math.min(randomcounter + 3, 100);
+
+            let seed = seed + Mathhelp.charToInt(key);
+
+            if (key = 128) { let finished = true; }
+
+            while (~(key=0)) {
+                let key = Keyboard.keyPressed();
+            }
+        }
+
+        let lastInt = seed;
+
+        do Screen.clearScreen();
+        do Output.moveCursor(0,0);
+        
+        return;
+    }
+
+    function int next() {
+        let lastInt = Mathhelp.mod((lastInt * 17)+7907, 32767);
+        return lastInt;
+    }
+
+    function int randomInt(int lower,int upper) {
+        return Mathhelp.mod(Math.abs(Random.next()), upper - lower) + lower;
+    }
+}

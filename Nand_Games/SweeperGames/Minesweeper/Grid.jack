@@ -1,0 +1,131 @@
+class Grid {
+    field Array internalGrid;
+    field int colW, rowH, flagCount, mineProb, mineCount;
+    field boolean firstMove;
+
+    constructor Grid new(int _colW, int _rowH, int _mineProb) {
+        var int i;
+        let i = 0;
+
+        let mineProb = _mineProb;
+        let colW = _colW;
+        let rowH = _rowH;
+        let internalGrid = Array.new(rowH);
+        let mineCount = 0;
+        let flagCount = 0;
+        let firstMove = true; //for different first move pattern gen
+
+        while (i < rowH) {
+            let internalGrid[i] = Array.new(colW);
+            let i = i + 1;
+        }
+
+        return this;
+    }
+
+    //methods
+
+
+
+    //destructor method
+    method void dispose() {
+        var int i_row;
+        var Array rowArray;
+        let i_row = 0;
+
+        while (i_row < rowH) {
+            let rowArray = internalGrid[i_row];
+            do rowArray.dispose();
+            let i_row = i_row + 1;
+        }
+
+        do internalGrid.dispose();
+
+        do Memory.deAlloc(this);
+
+        return;
+    }
+
+
+    //getters for grid handling in Jack
+
+    method int get(int i_col, int i_row) {
+        var Array rowArray;
+        let rowArray = internalGrid[i_row];
+        return rowArray[i_col];
+    }
+
+
+    method void set(int i_col, int i_row, int input) {
+        var Array rowArray;
+        let rowArray = internalGrid[i_row];
+        let rowArray[i_col] = input;
+        return;
+    }
+
+
+    method int getColW() {
+        return colW;
+    }
+
+    method int getRowH() {
+        return rowH;
+    }
+
+    method int getMineCount() {
+        return mineCount;
+    }
+
+    method int getFlagCount() {
+        return flagCount;
+    }
+
+
+    method boolean uncover_square(int x,int y) { //NOT DONE
+        var int cell;
+
+        //first move clause
+        if (firstMove){
+            do set(x,y,0);
+            let firstMove = false;
+        }
+
+        let cell = get(x,y);
+
+        if (cell = 1) {
+            return true;
+        }
+
+        if (cell = 0) {
+            //come back when done with other shit
+        }
+    }
+
+
+
+    method void flag(int x, int y) {
+        var int cell;
+
+        let cell = get(x,y);
+
+
+        //there is a game cycle with multiple possibilities for each square
+        //No bomb under cell, not revealed (0)
+        //Bomb under cell, not revealed (1)
+        //bomb under cell, flag placed over (2)
+        if (cell = 0) { do set(x,y,3)}
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+}

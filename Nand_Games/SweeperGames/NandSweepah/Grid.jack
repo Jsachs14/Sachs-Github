@@ -1,0 +1,328 @@
+//game status identifiers for each tile
+// 0 = nothing under cell, not revealed
+// 1 = mine under cell, not revealed
+// 2 = correctly flagged mine
+// 3 = incorrectly flagged cell
+// 4 = revealed cell with nothing
+
+
+
+class Grid {
+    field Array inGrid;
+    field int colW, rowH, flagcount, mineprob, minecount;
+    field boolean firstDig;
+    
+    constructor Grid new(int _colW, int _rowH, int _mineprob) {
+        var int i;
+        let i = 0;
+
+        let colW = _colW;
+        let rowH = _rowH;
+        let mineprob = _mineprob;
+        let inGrid = Array.new(rowH);
+        let flagcount = 0;
+        let minecount = 0;
+        let firstDig = true;
+
+
+
+        while (i < rowH) {
+            let inGrid[i] = Array.new(colW);
+            do placeMines(inGrid[i]);
+            let i = i + 1;
+        }
+        return this;
+    }
+
+    method void dispose() {
+        var int i;
+        var Array row;
+        let i = 0;
+
+        while (i < rowH) {
+            let row = inGrid[i];
+            do row.dispose();
+            let i = i + 1;
+        }
+
+        do inGrid.dispose();
+
+        do Memory.deAlloc(this);
+
+        return;
+    }
+
+
+
+    method void placeMines(Array row) {
+        var int j;
+        let j = 0;
+        while (j < colW) {
+            if (Random.randInt(0, 100) < mineprob) {
+                let row[j] = 1;
+                let minecount = minecount + 1;
+            }
+            else {
+                let row[j] = 0;
+            }
+            let j = j + 1;
+        }
+        return;
+    }
+
+
+    //getter function and setter function for the array within the array
+
+    method int getCell(int col, int row) {
+        var Array row;
+        let row = inGrid[row];
+        return row[col];
+    }
+
+    method void setCell(int col, int row, int val) {
+        var Array row;
+        let row = inGrid[row];
+        let row[col] = val;
+        return;
+    }
+
+    method int getFlagCount() {
+        return flagcount;
+    }
+
+    method int getMineCount() {
+        return minecount;
+    }
+
+    method int getColW() {
+        return colW;
+    }
+
+    method int getRowH() {
+        return rowH;
+    }
+
+
+    //digging method
+    //0 is nothing, 1 is mine
+
+    method boolean dig(int x, int y) {
+        var int cell;
+
+        if (firstDig) {
+            do setCell(x, y, 0);
+            let firstDig = false;
+        }
+
+        let cell = getCell(x, y);
+
+        if (cell = 1) {
+            return true;
+        }
+
+        if (cell = 0) {
+            if (neighborMineCount(x, y) = 0) {
+                do floodReveal(x, y);
+            }
+            do setCell(x, y, 4);
+        }
+
+        return false;
+
+    }
+
+    method void flag(int x, int y) {
+        var int cell;
+
+        let cell = getCell(x, y);
+
+        if (cell = 0) { //0 -->3
+            do setCell(x, y, 3);
+            let flagcount = flagcount + 1;
+        }
+
+        if (cell = 1) { //1 -->2
+            do setCell(x, y, 2);
+            let flagcount = flagcount + 1;
+        }
+
+        if (cell = 2) { //2 --> 1
+            do setCell(x, y, 1);
+            let flagcount = flagcount - 1;
+        }
+
+        if (cell = 3) { //3 --> 0
+            do setCell(x, y, 0);
+            let flagcount = flagcount - 1;
+        }
+
+        return;
+
+
+    }
+
+    method boolean gameWon() {
+        var int i, j, cell;
+        let i = 0;
+
+        while (i < rowH) {
+            let j = 0;
+            while (j < colW) {
+                let cell = getCell(j, i);
+                if (cell = 0 | cell = 3) {
+                    return false;
+                }
+                let j = j + 1;
+            }
+            let i = i + 1;
+        }
+
+        return true;
+    }
+
+    method void draw(boolean mines) {
+        var int i, j, cell;
+
+        let i = 0;
+
+        while (i < rowH) {
+            let j = 0;
+            while (j < colW) {
+                let cell = getCell(j, i);
+
+                if (cell = 0) {
+                    do Sprites.drawClosedCell(Mathhelp.cellToLocation(j, i));
+                }
+
+                if (cell = 1) {
+                    if (mines) {
+                        do Sprites.drawMineCell(Mathhelp.cellToLocation(j,i));
+                    }
+                    else {
+                        do Sprites.drawClosedCell(Mathhelp.cellToLocation(j,i));
+                    }
+                }
+
+                if (cell = 2 | cell = 3 ) {
+                    do Sprites.drawFlagCell(Mathhelp.cellToLocation(j,i));
+                }
+
+                if (cell = 4) {
+                    do Sprites.drawNumberedCell(neighborMineCount(j,i), Mathhelp.cellToLocation(j,i));
+                }
+
+                let j = j + 1;
+            }
+            
+            let i = i + 1;
+        }
+
+        return;
+    }
+
+    method int neighborMineCount(int x, int y) {
+        var int counter;
+
+        let counter = 0;
+
+        //eight squares around the cell
+
+        if (((x-1)>-1) & ((y-1)>-1)) {
+            let counter = counter + Mathhelp.mineCount(getCell(x-1, y-1));
+        }
+        if ((x-1)>-1) {
+            let counter = counter + Mathhelp.mineCount(getCell(x-1, y));
+        }
+
+        if (((x-1)>-1) & ((y+1)<rowH)) {
+            let counter = counter + Mathhelp.mineCount(getCell(x-1, y+1));
+        }
+
+        if ((y-1)>-1) {
+            let counter = counter + Mathhelp.mineCount(getCell(x, y-1));
+        }
+
+        if ((y+1)<rowH) {
+            let counter = counter + Mathhelp.mineCount(getCell(x, y+1));
+        }
+
+        if (((x+1)<colW) & ((y-1)>-1)) {
+            let counter = counter + Mathhelp.mineCount(getCell(x+1, y-1));
+        }
+
+        if ((x+1)<colW) {
+            let counter = counter + Mathhelp.mineCount(getCell(x+1, y));
+        }
+
+        if (((x+1)<colW) & ((y+1)<rowH)) {
+            let counter = counter + Mathhelp.mineCount(getCell(x+1, y+1));
+        }
+
+        return counter;
+
+
+    }
+
+    method void floodReveal(int x, int y) {
+        var Queue queue;
+        var int cell, i, j;
+        let queue = Queue.new();
+        do enqueueneighbors(queue, x, y);
+
+        while(~queue.isEmpty()) {
+            let i = queue.dequeue();
+            let j = queue.dequeue();
+            let cell = getCell(i, j);
+            if (cell = 0) {
+                do setCell(i, j, 4);
+                if (neighborMineCount(i, j) = 0) {
+                    do enqueueneighbors(queue, i, j);
+                }
+            }
+        }
+
+        do queue.dispose();
+        return;
+    }
+
+    method void enqueueneighbors(Queue queue, int x, int y) {
+        if (((x - 1) > -1) & ((y - 1) > -1)) { 
+            do queue.enqueue(x - 1); 
+            do queue.enqueue(y - 1); 
+        }
+        if (((x - 1) > -1)) {
+            do queue.enqueue(x - 1); 
+            do queue.enqueue(y); 
+        }
+        if (((x - 1) > -1)&((y + 1) < rowH)) { 
+            do queue.enqueue(x - 1); 
+            do queue.enqueue(y + 1); 
+        }
+        if (((y - 1) > -1)) { 
+            do queue.enqueue(x); 
+            do queue.enqueue(y - 1); 
+        }
+        if (((y + 1) < rowH)) { 
+            do queue.enqueue(x); 
+            do queue.enqueue(y + 1); 
+        }
+        if (((x + 1) < colW) & ((y - 1) > -1)) { 
+            do queue.enqueue(x + 1); 
+            do queue.enqueue(y - 1); 
+        }
+        if (((x + 1) < colW)) { 
+            do queue.enqueue(x + 1); 
+            do queue.enqueue(y); 
+        }
+        if (((x + 1) < colW) & ((y + 1) < rowH)) { 
+            do queue.enqueue(x + 1); 
+            do queue.enqueue(y + 1); 
+        }
+        return;
+    }
+
+
+
+
+
+}

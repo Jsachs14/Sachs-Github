@@ -1,0 +1,40 @@
+//double linked list node
+
+class Node {
+    field int value;
+    field Node prev, next;
+
+    constructor Node new(int v) {
+       let value = v;
+       let prev = null;
+       let next = null;
+       return this;
+    }
+
+    method Node getforward() {
+        return next;
+    }
+
+    method Node getbackward() {
+        return prev;
+    }
+
+    method void setforward(Node n) {
+        let next = n;
+        return;
+    }
+
+    method void setbackward(Node n) {
+        let prev = n;
+        return;
+    }
+
+    method int getvalue() {
+        return value;
+    }
+
+    method void destroy() {
+        do Memory.deAlloc(this);
+        return;
+    }
+}

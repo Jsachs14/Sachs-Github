@@ -1,0 +1,119 @@
+class Pointer {
+    field int x, y;
+    field Grid grid;
+    field boolean locked;
+
+    constructor Pointer new() {
+        return this;
+    }
+
+    method void init(Grid g) {
+        let grid = g;
+        let x = 0;
+        let y = 0;
+        let locked = false;
+        return;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method int captureInput() {
+        var char key;
+        var int action;
+        let action = 0;
+
+        while (action = 0) {
+            if (~locked) {
+                do grid.draw(false);
+                do Sprites.drawCursor(Mathhelp.cellToLocation(x, y));
+            }
+
+            while (key=0) {
+                let key = Keyboard.keyPressed();
+            }
+
+            if ((key=130) & (~locked)) {
+                do moveL();
+            }
+
+            if ((key=131) & (~locked)) {
+                do moveU();
+            }
+
+            if ((key=132) & (~locked)) {
+                do moveR();
+            }
+
+            if ((key=133) & (~locked)) {
+                do moveD();
+            }
+
+            if (key=70) { //flag
+                let action = 1;
+            }
+
+            if (key = 32) { //dig
+                let action = 2; 
+            }
+
+            if (key = 82) { //R
+                let action = 3;
+            }
+
+            if (key = 81) { //Q
+                let action = 4;
+            }
+
+            while (~(key=0)) {
+                let key = Keyboard.keyPressed();
+            }
+
+
+        }
+
+        return action;
+    }
+
+    method void moveL() {
+        let x = Math.max(0, x-1);
+        return;
+    }
+
+    method void moveU() {
+        let y = Math.max(0, y-1);
+        return;
+    }
+
+    method void moveR() {
+        let x = Math.min(grid.getColW()-1, x+1);
+        return;
+    }
+
+    method void moveD() {
+        let y = Math.min(grid.getRowH()-1, y+1);
+        return;
+    }
+
+    method void lock() {
+        let locked = true;
+        return;
+    }
+
+    method void unlock() {
+        let locked = false;
+        return;
+    }
+
+    method int getX() {
+        return x;
+    }
+
+    method int getY() {
+        return y;
+    }
+
+
+}

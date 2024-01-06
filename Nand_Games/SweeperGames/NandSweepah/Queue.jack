@@ -1,0 +1,63 @@
+class Queue {
+    field Node head, tail;
+
+    constructor Queue new() {
+        let head = null;
+        let tail = null;
+        return this;
+    }
+
+    method boolean isEmpty() {
+        return (head = null) & (tail = null);
+    }
+
+    method void enqueue(int val) {
+        var Node node;
+        let node = Node.new(val);
+
+        do node.setforward(val);
+
+        if (head) {
+            do head.setbackward(node);
+        }
+        else {
+            let tail = node;
+        }
+
+        let head = node;
+        return;
+    }
+
+     method void dispose(){
+        var Node runner, lastNode;
+        let runner = head;
+        while (runner) {
+            let lastNode = runner;
+            let runner = lastNode.getforward();
+            do lastNode.destroy();
+        }
+        do Memory.deAlloc(this);
+        return;
+     }
+
+     method int dequeue() {
+        var Node lastNode;
+        var int val;
+
+        let lastNode = tail;
+
+        if (tail) {
+            let val = tail.getvalue();
+            do tail.destroy();
+            let tail = lastNode.getbackward();
+
+            if (tail=head) {
+                let head = null; 
+            }
+            return val;
+        }
+        else {
+            return null;
+        }
+     }
+}

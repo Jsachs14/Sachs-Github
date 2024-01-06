@@ -1,0 +1,17 @@
+
+class Main {
+    function void main() {
+        var Game nandsweeper;
+
+        do IntroScreen.init();
+        do IntroScreen.displayIntro();
+        do Random.init();
+
+        let nandsweeper = Game.new();
+        do nandsweeper.run();
+        do nandsweeper.dispose();
+        do Sys.halt();
+
+        return;
+    }
+}
