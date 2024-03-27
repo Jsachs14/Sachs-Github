@@ -29,8 +29,7 @@ A repository created to display coding projects I have completed
 --> DWave is a folder with code for VQE using DWave quantum annealer  
   
 6. WashURacing  
-  
 --> Arduino C files written for WashU Racing  
 --> Includes Sensorboard Code from 2 years of Car Model  
 --> In progress Live Telemetry Model for offcar data transmission  
---> Future: Implementing Error Diagnostic Codes for the Car  
+--> Future: Implementing Error Diagnostic Codes for the Car   
