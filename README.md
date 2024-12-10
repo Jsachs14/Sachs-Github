@@ -18,11 +18,11 @@ Languages: Python, C++, MATLAB, Latex, Arduino C, Jack, Altium
 --> Code is not finalized and project is still in progress  
 --> Written in Python  
 
-4. Physics
---> Gamma Ray Spectroscopy: Data Analysis for a Physics Lab taking the spectrum of a gamma ray source.
---> Also calculations for gamma ray attenuation through a gold sheet
---> Quantum Mechanics: Combination of Quantum-Mechanics based coding projects. Includes a finite difference method for the Woods-Saxon potential, and a VQE based method for chemical catalytic matrices
-
+4. Physics  
+--> Gamma Ray Spectroscopy: Data Analysis for a Physics Lab taking the spectrum of a gamma ray source.  
+--> Also calculations for gamma ray attenuation through a gold sheet  
+--> Quantum Mechanics: Combination of Quantum-Mechanics based coding projects. Includes a finite difference method for the Woods-Saxon potential, and a VQE based method for chemical catalytic matrices  
+  
   
 5. Pygame_Games  
 --> Games created in Pygame  
@@ -50,8 +50,8 @@ Languages: Python, C++, MATLAB, Latex, Arduino C, Jack, Altium
 
 
 
-*data has been included where required to run files. If something is missing, please let me know and I will try to provide it. Thanks for reading, and feel free to reach me with questions or if you ever want to chat!*
+*data has been included where required to run files. If something is missing, please let me know and I will try to provide it. Thanks for reading, and feel free to reach me with questions or if you ever want to chat!*   
 
-Jonah Sachs
-jonahmsachs@gmail.com
+Jonah Sachs  
+jonahmsachs@gmail.com  
 
