@@ -29,7 +29,7 @@ Languages: Python, C++, MATLAB, Latex, Arduino C, Jack, Altium
 --> Games included: DinoGame, FlappyBird  
 --> A project for fun to try and make some games using Python  
 
-6. Technical Writing
+6. Technical Writing  
 -->PDFs of Latex written technical reports in various topics in physics
 --> Topics include: Black Holes, Quantum Mechanics, Noise and Fourier Analysis, Phase Transitions, Fluid Mechanics
   
